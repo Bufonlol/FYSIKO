@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { usePacientes, useDoctores, useExpediente, useNotasClinnicas, useOdontograma, useRecetas } from '../lib/hooks'
+import { usePacientes, useDoctores, useExpediente, useNotasClinnicas, useRecetas } from '../lib/hooks'
 import { supabase } from '../lib/supabase'
 import { useStore } from '../store/useStore'
 import { FadeContent } from '../components/animations'
 import { Icon } from '../components/ui/Icon'
 import { EmptyState, LoadingState } from '../components/ui/FeedbackState'
-import type { Patient, Doctor, ToothStatus, ToothData, RecetaMedicamento } from '../types'
+import type { Patient, Doctor, RecetaMedicamento } from '../types'
 
 const STATUS_STYLES: Record<string, { bg: string; color: string; label: string }> = {
   activo:   { bg: '#f0f7e6', color: '#7aa33d', label: 'Activo' },
@@ -39,22 +39,6 @@ function calcAge(fechaNacimiento: string): number {
   if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--
   return edad >= 0 && edad < 150 ? edad : 0
 }
-
-// ── Tooth constants ──────────────────────────────────────────────────────────
-const TOOTH_COLORS: Record<ToothStatus, { bg: string; label: string }> = {
-  sano:      { bg: '#e8ecf0', label: 'Sano' },
-  caries:    { bg: '#f59e0b', label: 'Caries' },
-  obturado:  { bg: '#8db84a', label: 'Obturado' },
-  corona:    { bg: '#5b84b1', label: 'Corona' },
-  ausente:   { bg: '#1a2535', label: 'Ausente' },
-  fractura:  { bg: '#e74c3c', label: 'Fractura' },
-  implante:  { bg: '#7c3aed', label: 'Implante' },
-  puente:    { bg: '#e07b54', label: 'Puente' },
-}
-const UPPER_L = [18,17,16,15,14,13,12,11]
-const UPPER_R = [21,22,23,24,25,26,27,28]
-const LOWER_L = [48,47,46,45,44,43,42,41]
-const LOWER_R = [31,32,33,34,35,36,37,38]
 
 // ── ChipList ─────────────────────────────────────────────────────────────────
 function ChipList({ items, onChange, placeholder, suggestions = [] }: {
@@ -97,7 +81,7 @@ function ChipList({ items, onChange, placeholder, suggestions = [] }: {
 
 // ── ExpedienteModal ───────────────────────────────────────────────────────────
 function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doctors: Doctor[]; onClose: () => void }) {
-  const [tab, setTab] = useState<'historia' | 'notas' | 'odontograma' | 'recetas'>('historia')
+  const [tab, setTab] = useState<'historia' | 'notas' | 'recetas'>('historia')
   const showToast = useStore(s => s.showToast)
   const currentUser = useStore(s => s.currentUser)
 
@@ -196,9 +180,6 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
 
   function printExpediente() {
     const fmt = (d: string) => { try { return new Date(d + 'T12:00').toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }) } catch { return d } }
-    const toothStatusLabels: Record<string, string> = { sano: 'Sano', caries: 'Caries', obturado: 'Obturado', corona: 'Corona', ausente: 'Ausente', fractura: 'Fractura', implante: 'Implante', puente: 'Puente' }
-    const toothRows = Object.entries(localDientes).filter(([, d]) => d.status !== 'sano')
-      .map(([num, d]) => `<tr><td>#${num}</td><td>${toothStatusLabels[d.status] ?? d.status}</td><td style="color:#6b7280">${d.notes || '—'}</td></tr>`).join('')
     const notasHTML = notas.length === 0 ? '<p class="empty">Sin notas clínicas registradas.</p>' :
       notas.map(n => { const doc = doctors.find(d => d.id === n.doctorId); return `<div class="card"><div class="card-head"><span class="date">${fmt(n.visitDate)}</span><span class="muted">${doc?.name ?? 'Fisioterapeuta'}</span></div>${n.motivo ? `<div><b>Motivo:</b> ${n.motivo}</div>` : ''}${n.diagnostico ? `<div><b>Diagnóstico:</b> ${n.diagnostico}</div>` : ''}${n.tratamiento ? `<div><b>Tratamiento:</b> ${n.tratamiento}</div>` : ''}${n.indicaciones ? `<div><b>Indicaciones:</b> ${n.indicaciones}</div>` : ''}${n.seguimiento ? `<div><b>Seguimiento:</b> ${n.seguimiento}</div>` : ''}</div>` }).join('')
     const recetasHTML = recetas.length === 0 ? '<p class="empty">Sin recetas registradas.</p>' :
@@ -208,7 +189,6 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
     const html = `<!DOCTYPE html><html><head><title>Expediente — ${patient.name}</title><meta charset="UTF-8"><style>${css}</style></head><body>
       <div class="header"><div><h1>${patient.name}</h1><div class="muted">Expediente Clínico · ${patient.age} años${patient.phone ? ' · ' + patient.phone : ''}</div></div><div style="text-align:right"><strong style="color:#5b84b1;font-size:15px">FYSIKO</strong><div class="muted">Generado: ${today}</div></div></div>
       <div class="section"><h2>Historia Médica</h2><div class="grid2"><div><div class="lbl">TIPO DE SANGRE</div><div>${hForm.bloodType || '—'}</div></div><div><div class="lbl">CONTACTO DE EMERGENCIA</div><div>${hForm.emergencyContact || '—'}${hForm.emergencyPhone ? ' · ' + hForm.emergencyPhone : ''}</div></div></div>${hForm.allergies.length ? `<div style="margin-bottom:10px"><div class="lbl">ALERGIAS</div><div class="chips">${hForm.allergies.map(a => `<span class="chip">${a}</span>`).join('')}</div></div>` : ''}${hForm.conditions.length ? `<div style="margin-bottom:10px"><div class="lbl">PADECIMIENTOS</div><div class="chips">${hForm.conditions.map(c => `<span class="chip">${c}</span>`).join('')}</div></div>` : ''}${hForm.medications.length ? `<div style="margin-bottom:10px"><div class="lbl">MEDICAMENTOS</div><div class="chips">${hForm.medications.map(m => `<span class="chip">${m}</span>`).join('')}</div></div>` : ''}${hForm.notes ? `<div><div class="lbl">NOTAS</div><div>${hForm.notes}</div></div>` : ''}</div>
-      <div class="section"><h2>Odontograma</h2>${toothRows ? `<table><thead><tr><th>Diente</th><th>Estado</th><th>Notas</th></tr></thead><tbody>${toothRows}</tbody></table>` : '<p class="empty">Sin observaciones en el odontograma.</p>'}</div>
       <div class="section"><h2>Notas Clínicas</h2>${notasHTML}</div>
       <div class="section"><h2>Recetas</h2>${recetasHTML}</div>
 
@@ -222,52 +202,6 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
     setTimeout(() => win.print(), 500)
   }
 
-
-  // ── Odontograma ──
-  const { dientes, loading: loadingOdo, saveDientes } = useOdontograma(patient.id)
-  const [localDientes, setLocalDientes] = useState<Record<string, ToothData>>({})
-  const [selectedTooth, setSelectedTooth] = useState<number | null>(null)
-  const [toothForm, setToothForm] = useState<{ status: ToothStatus; notes: string }>({ status: 'sano', notes: '' })
-  const [savingOdo, setSavingOdo] = useState(false)
-  useEffect(() => { setLocalDientes(dientes) }, [dientes])
-
-  function selectTooth(num: number) {
-    setSelectedTooth(num)
-    const d = localDientes[String(num)]
-    setToothForm({ status: d?.status ?? 'sano', notes: d?.notes ?? '' })
-  }
-
-  async function handleSaveTooth() {
-    if (!selectedTooth) return
-    setSavingOdo(true)
-    const updated = { ...localDientes, [String(selectedTooth)]: { status: toothForm.status, notes: toothForm.notes } }
-    setLocalDientes(updated)
-    await saveDientes(updated)
-    setSelectedTooth(null)
-    showToast('Diente actualizado', 'success')
-    setSavingOdo(false)
-  }
-
-  function ToothBtn({ num }: { num: number }) {
-    const d = localDientes[String(num)]
-    const color = d ? TOOTH_COLORS[d.status].bg : TOOTH_COLORS.sano.bg
-    const isSelected = selectedTooth === num
-    const isAbsent = d?.status === 'ausente'
-    return (
-      <button onClick={() => selectTooth(num)} title={`${num}${d ? ' — ' + TOOTH_COLORS[d.status].label : ''}`} style={{
-        width: 34, height: 42, borderRadius: 6, border: isSelected ? '2px solid #5b84b1' : '1.5px solid #cbd5e1',
-        background: isAbsent ? '#1a2535' : color,
-        cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between',
-        padding: '4px 2px', transition: 'transform 0.1s',
-        transform: isSelected ? 'scale(1.15)' : 'scale(1)',
-        position: 'relative',
-        boxShadow: isSelected ? '0 0 0 3px rgba(91,132,177,0.3)' : undefined,
-      }}>
-        <span style={{ fontSize: 8, fontWeight: 700, color: isAbsent ? '#fff' : '#1a2535', lineHeight: 1 }}>{num}</span>
-        {isAbsent && <span style={{ fontSize: 14, color: '#fff', lineHeight: 1 }}>×</span>}
-      </button>
-    )
-  }
 
   const lS: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginBottom: 4, display: 'block' }
   const iS: React.CSSProperties = { width: '100%', padding: '8px 10px', borderRadius: 8, border: '1.5px solid #e2e8f0', fontSize: 13, color: '#1a2535', outline: 'none', boxSizing: 'border-box', background: '#fff' }
@@ -302,7 +236,6 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
           {([
             ['historia', 'hospital', 'Historia Médica'],
             ['notas', 'treatments', 'Notas Clínicas'],
-            ['odontograma', 'odontogram', 'Odontograma'],
             ['recetas', 'pill', 'Recetas'],
 
           ] as const).map(([key, icon, label]) => (
@@ -575,82 +508,6 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
             </div>
           )}
 
-          {/* ── Tab: Odontograma ── */}
-          {tab === 'odontograma' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              {loadingOdo ? (
-                <div style={{ textAlign: 'center', color: '#8a9ab0', padding: 40 }}>Cargando odontograma…</div>
-              ) : (
-                <>
-                  {/* Leyenda */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                    {(Object.entries(TOOTH_COLORS) as [ToothStatus, { bg: string; label: string }][]).map(([status, { bg, label }]) => (
-                      <div key={status} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#4a5568' }}>
-                        <div style={{ width: 14, height: 14, borderRadius: 3, background: bg, border: '1px solid #e2e8f0' }} />
-                        {label}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Diagrama */}
-                  <div className="odonto-diagram" style={{ background: '#f8fafc', borderRadius: 12, padding: 20, border: '1px solid #e2e8f0', overflowX: 'auto' }}>
-                    <div style={{ textAlign: 'center', fontSize: 10, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginBottom: 8 }}>MAXILAR SUPERIOR</div>
-                    {/* Upper jaw */}
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 2, marginBottom: 4 }}>
-                      <div style={{ display: 'flex', gap: 2 }}>{UPPER_L.map(n => <ToothBtn key={n} num={n} />)}</div>
-                      <div style={{ width: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ width: 1, height: '100%', background: '#cbd5e1' }} />
-                      </div>
-                      <div style={{ display: 'flex', gap: 2 }}>{UPPER_R.map(n => <ToothBtn key={n} num={n} />)}</div>
-                    </div>
-                    {/* Center line */}
-                    <div style={{ height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, margin: '4px 0' }}>
-                      <div style={{ flex: 1, height: 1, background: '#e2e8f0' }} />
-                      <span style={{ fontSize: 10, color: '#8a9ab0', fontWeight: 600, whiteSpace: 'nowrap' }}>──── Línea oclusal ────</span>
-                      <div style={{ flex: 1, height: 1, background: '#e2e8f0' }} />
-                    </div>
-                    {/* Lower jaw */}
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 2, marginTop: 4 }}>
-                      <div style={{ display: 'flex', gap: 2 }}>{LOWER_L.map(n => <ToothBtn key={n} num={n} />)}</div>
-                      <div style={{ width: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ width: 1, height: '100%', background: '#cbd5e1' }} />
-                      </div>
-                      <div style={{ display: 'flex', gap: 2 }}>{LOWER_R.map(n => <ToothBtn key={n} num={n} />)}</div>
-                    </div>
-                    <div style={{ textAlign: 'center', fontSize: 10, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginTop: 8 }}>MAXILAR INFERIOR</div>
-                  </div>
-
-                  {/* Tooth editor */}
-                  {selectedTooth && (
-                    <div style={{ background: '#fff', borderRadius: 12, border: '2px solid #5b84b1', padding: 20 }}>
-                      <div style={{ fontSize: 14, fontWeight: 800, color: '#1a2535', marginBottom: 16 }}>
-                        Diente {selectedTooth}
-                      </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 14 }}>
-                        {(Object.entries(TOOTH_COLORS) as [ToothStatus, { bg: string; label: string }][]).map(([status, { bg, label }]) => (
-                          <button key={status} onClick={() => setToothForm(f => ({ ...f, status }))} style={{
-                            padding: '8px 4px', borderRadius: 8, border: toothForm.status === status ? '2.5px solid #5b84b1' : '1.5px solid #e2e8f0',
-                            background: bg, cursor: 'pointer', fontSize: 11, fontWeight: 700,
-                            color: status === 'ausente' ? '#fff' : '#1a2535',
-                            boxShadow: toothForm.status === status ? '0 0 0 2px rgba(91,132,177,0.25)' : undefined,
-                          }}>{label}</button>
-                        ))}
-                      </div>
-                      <label style={{ fontSize: 11, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginBottom: 4, display: 'block' }}>NOTAS DEL DIENTE</label>
-                      <textarea value={toothForm.notes} onChange={e => setToothForm(f => ({ ...f, notes: e.target.value }))}
-                        placeholder="Observaciones…" style={{ width: '100%', padding: '8px 10px', borderRadius: 8, border: '1.5px solid #e2e8f0', fontSize: 13, resize: 'vertical', minHeight: 56, boxSizing: 'border-box', outline: 'none' }} />
-                      <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                        <button onClick={() => setSelectedTooth(null)} style={{ flex: 1, padding: '9px 0', borderRadius: 8, border: '1.5px solid #e2e8f0', background: '#fff', color: '#8a9ab0', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Cancelar</button>
-                        <button onClick={handleSaveTooth} disabled={savingOdo} style={{ flex: 2, padding: '9px 0', borderRadius: 8, border: 'none', background: '#5b84b1', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
-                          {savingOdo ? 'Guardando…' : 'Guardar diente'}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>
