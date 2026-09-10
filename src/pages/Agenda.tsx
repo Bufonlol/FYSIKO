@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useCitas, usePacientes, useDoctores, useConsultorios, useBloqueosAgenda } from '../lib/hooks'
+import { useCitas, usePacientes, useDoctores, useConsultorios, useBloqueosAgenda, useTratamientos } from '../lib/hooks'
 import { supabase } from '../lib/supabase'
 import { useStore } from '../store/useStore'
 import { FadeContent } from '../components/animations'
@@ -10,38 +10,6 @@ import type { AppointmentStatus, PatientType } from '../types'
 
 const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
 
-const TRATAMIENTOS = [
-  'VALORACIÓN INICIAL',
-  'CONSULTA DE SEGUIMIENTO',
-  'TERAPIA MANUAL',
-  'MOVILIZACIÓN ARTICULAR',
-  'MASAJE TERAPÉUTICO',
-  'LIBERACIÓN MIOFASCIAL',
-  'PUNCIÓN SECA',
-  'ELECTROESTIMULACIÓN (TENS/EMS)',
-  'ULTRASONIDO TERAPÉUTICO',
-  'TERAPIA CON CALOR (TERMOTERAPIA)',
-  'TERAPIA CON FRÍO (CRIOTERAPIA)',
-  'LÁSER TERAPÉUTICO',
-  'ONDAS DE CHOQUE',
-  'VENDAJE NEUROMUSCULAR (KINESIOTAPE)',
-  'EJERCICIOS TERAPÉUTICOS',
-  'REEDUCACIÓN POSTURAL',
-  'REHABILITACIÓN POST-QUIRÚRGICA',
-  'REHABILITACIÓN DEPORTIVA',
-  'REHABILITACIÓN NEUROLÓGICA',
-  'REHABILITACIÓN CARDIOPULMONAR',
-  'FISIOTERAPIA DE HOMBRO',
-  'FISIOTERAPIA DE RODILLA',
-  'FISIOTERAPIA DE COLUMNA',
-  'TRATAMIENTO DE LUMBALGIA',
-  'TRATAMIENTO DE CERVICALGIA',
-  'TRATAMIENTO DE ESGUINCE',
-  'TRATAMIENTO DE TENDINITIS',
-  'DRENAJE LINFÁTICO',
-  'ISOCINÉTICOS',
-  'PLAN DE EJERCICIOS EN CASA',
-]
 
 // 15-minute granularity for the appointment form
 const HOUR_NUMS = [8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -103,9 +71,10 @@ const lStyle: React.CSSProperties = {
   letterSpacing:'0.5px', marginBottom:5, display:'block',
 }
 
-function TratamientoCombobox({ values, onChange, lStyle, iStyle }: {
+function TratamientoCombobox({ values, onChange, options, lStyle, iStyle }: {
   values: string[]
   onChange: (v: string[]) => void
+  options: string[]
   lStyle: React.CSSProperties
   iStyle: React.CSSProperties
 }) {
@@ -113,8 +82,8 @@ function TratamientoCombobox({ values, onChange, lStyle, iStyle }: {
   const [open, setOpen] = useState(false)
 
   const filtered = (query.trim() === ''
-    ? TRATAMIENTOS
-    : TRATAMIENTOS.filter(t => t.toLowerCase().includes(query.toLowerCase()))
+    ? options
+    : options.filter(t => t.toLowerCase().includes(query.toLowerCase()))
   ).filter(t => !values.includes(t))
 
   function add(t: string) {
@@ -256,6 +225,7 @@ export function Agenda() {
   const { data: patients, setData: setPatients } = usePacientes()
   const { data: doctors } = useDoctores()
   const { data: consultorios } = useConsultorios()
+  const { data: tratamientosCatalog } = useTratamientos()
   const { data: allApptsRaw, loading: loadingCitas, refetch } = useCitas((appt) => {
     const pat = patients.find(p => p.id === appt.patientId)
     const name = pat?.name ?? 'Paciente'
@@ -1301,6 +1271,7 @@ export function Agenda() {
               <TratamientoCombobox
                 values={form.treatments}
                 onChange={v => setForm(f=>({...f, treatments:v}))}
+                options={tratamientosCatalog}
                 lStyle={lStyle}
                 iStyle={iStyle}
               />

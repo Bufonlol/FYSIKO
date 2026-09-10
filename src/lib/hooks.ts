@@ -3,8 +3,10 @@ import { supabase } from './supabase'
 import type { Doctor, Patient, Appointment, AgendaBlock, Notification, SystemUser, User, ExpedienteClinco, NotaClinica, ToothData, Receta } from '../types'
 
 // ── Auth ────────────────────────────────────────────────────────────────────
+const TENANT_SLUG = 'fysiko'
+
 export async function loginWithSupabase(username: string, password: string): Promise<User | null> {
-  const email = `${username.trim()}@fysiko.local`
+  const email = `${TENANT_SLUG}.${username.trim().toLowerCase()}@coyo.local`
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
   if (error || !data.user) return null
 
@@ -213,6 +215,24 @@ export function useDashboard() {
   }, [])
 
   return { citasHoy, ingresosHoy, pacientesNuevos, todayAppts, loading }
+}
+
+export function useTratamientos() {
+  const [data, setData] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+
+  async function fetch() {
+    const { data: rows } = await supabase
+      .from('tratamientos')
+      .select('nombre')
+      .eq('activo', true)
+      .order('nombre')
+    setData((rows ?? []).map(r => r.nombre))
+    setLoading(false)
+  }
+
+  useEffect(() => { fetch() }, [])
+  return { data, loading, refetch: fetch }
 }
 
 export function useConsultorios() {
