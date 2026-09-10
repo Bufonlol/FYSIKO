@@ -11,78 +11,36 @@ import type { AppointmentStatus, PatientType } from '../types'
 const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
 
 const TRATAMIENTOS = [
-  'CONSULTA DE PRIMERA VEZ INFANTIL',
-  'CONSULTA DE PRIMERA VEZ ADULTO',
-  'RADIOGRAFIA',
-  'PROFILAXIS Y APLICACIÓN DE FLUOR INFANTIL',
-  'APLICACIÓN DE FLUOR EN BARNIZ',
-  'PROFILAXIS (ULTRASONIDO) ADULTO',
-  'RESINAS ADULTO GRADO 1',
-  'RESINA COMPUESTA',
-  'RESINA NIÑOS',
-  'EXTRACCION ADULTO',
-  'EXTRACCIÓN NIÑOS',
-  'EXTRACCION DE CORDALES SUPERIORES',
-  'PULPOTOMIA',
-  'PULPECTOMIA',
-  'CORONA DE ACERO CROMO',
-  'BLANQUEAMIENTO',
-  'BLANQUEAMIENTO CON GUARDAS',
-  'FRENILECTOMIA',
-  'TX. POR OPERCULITIS',
-  'SELLADORES DE FOSETAS Y FISURAS',
-  'CARILLAS EMAX',
-  'CARILLAS ZIRCONIO',
-  'JACKET CON DIENTE DE RESINA',
-  'CORONA EMAX',
-  'CORONA ZIRCONIO',
-  'INCRUSTACION POLIVIDRIO',
-  'PLACA PROVISIONAL DE 1 A 3 UNIDADES',
-  'PLACA PROVISIONAL DE 4 A 7 UNIDADES',
-  'PLACA PROVISIONAL DE 8 A 12 UNIDADES',
-  'TRATAMIENTO DE ORTODONCIA',
-  'TRATAMIENTO DE ORTODONCIA ESTETICO',
-  'CONSULTA DE ORTODONCIA',
-  'BONDEADO DE BRACKET',
-  'CEMENTACION DE BANDA',
-  'BONDEADO DE TUBO',
-  'GUARDAS',
-  'GUARDA DE ALTO IMPACTO',
-  'TRATAMIENTO DE ORTOPEDIA',
-  'CONSULTA DE ORTOPEDIA',
-  'REPOSICIÓN DE APARATO',
-  'ELIMINADORES DE HABITOS',
-  'CEMENTACION DE MANTENEDOR',
-  'MANTENEDOR DE ESPACIO BILATERAL',
-  'MANTENEDOR DE ESPACIO UNILARAL',
-  'ENDODONCIA ANTERIORES',
-  'ENDODONCIA POSTERIORES',
-  'RETRATAMIENTO DE ENDODONCIA',
-  'BLANQUEAMIENTO INTERCONDUCTO',
-  'ALARGAMIENTO DE CORONA',
-  'ENDOPOSTE',
-  'CIRUGIA DE TERCER MOLAR',
-  'RESINA CORONA CELULOIDE INFANTIL',
-  'RESINA CORONA CELULOIDE ADULTO',
-  'IONOMERO RESTAURATIVO PEDIATRICO',
-  'TERAPIA PULPAR ADULTO',
-  'CURETAJE',
-  'IMPLANTE',
-  'PROTESIS FLEXIBLE UNILATERAL',
-  'PROTESIS FLEXIBLE BILATERAL',
-  'PROTESIS FLEXIBLE PARCIAL',
-  'PROTESIS FLEXIBLE TOTAL',
-  'PROTESIS ACRILICO TOTAL',
-  'PROTESIS ACRILICO PARCIAL',
-  'PROTESIS ACRILICO BILATERAL',
-  'PROTESIS ACRILICO UNILATERAL',
-  'REBASE PARA PROTESIS',
-  'VALORACIÓN',
-  'RETIRO DE ORTODONCIA',
-  'TOMA DE IMPRESIONES',
-  'ENTREGA DE APARATO O CEMENTACIÓN',
-  'EQUIA',
-  'IONOMERO',
+  'VALORACIÓN INICIAL',
+  'CONSULTA DE SEGUIMIENTO',
+  'TERAPIA MANUAL',
+  'MOVILIZACIÓN ARTICULAR',
+  'MASAJE TERAPÉUTICO',
+  'LIBERACIÓN MIOFASCIAL',
+  'PUNCIÓN SECA',
+  'ELECTROESTIMULACIÓN (TENS/EMS)',
+  'ULTRASONIDO TERAPÉUTICO',
+  'TERAPIA CON CALOR (TERMOTERAPIA)',
+  'TERAPIA CON FRÍO (CRIOTERAPIA)',
+  'LÁSER TERAPÉUTICO',
+  'ONDAS DE CHOQUE',
+  'VENDAJE NEUROMUSCULAR (KINESIOTAPE)',
+  'EJERCICIOS TERAPÉUTICOS',
+  'REEDUCACIÓN POSTURAL',
+  'REHABILITACIÓN POST-QUIRÚRGICA',
+  'REHABILITACIÓN DEPORTIVA',
+  'REHABILITACIÓN NEUROLÓGICA',
+  'REHABILITACIÓN CARDIOPULMONAR',
+  'FISIOTERAPIA DE HOMBRO',
+  'FISIOTERAPIA DE RODILLA',
+  'FISIOTERAPIA DE COLUMNA',
+  'TRATAMIENTO DE LUMBALGIA',
+  'TRATAMIENTO DE CERVICALGIA',
+  'TRATAMIENTO DE ESGUINCE',
+  'TRATAMIENTO DE TENDINITIS',
+  'DRENAJE LINFÁTICO',
+  'ISOCINÉTICOS',
+  'PLAN DE EJERCICIOS EN CASA',
 ]
 
 // 15-minute granularity for the appointment form
@@ -367,8 +325,8 @@ export function Agenda() {
     )
     const doctor = doctors.find(d => d.id === doctorId)
     const confirmation = affected.length > 0
-      ? `Se cancelarán ${affected.length} cita${affected.length !== 1 ? 's' : ''} de ${doctor?.name ?? 'la doctora'} y se notificará a sus pacientes. ¿Continuar?`
-      : `Se marcará el día completo como no disponible para ${doctor?.name ?? 'la doctora'}. ¿Continuar?`
+      ? `Se cancelarán ${affected.length} cita${affected.length !== 1 ? 's' : ''} de ${doctor?.name ?? 'el fisioterapeuta'} y se notificará a sus pacientes. ¿Continuar?`
+      : `Se marcará el día completo como no disponible para ${doctor?.name ?? 'el fisioterapeuta'}. ¿Continuar?`
     if (!window.confirm(confirmation)) return
 
     setSavingBlock(true)
@@ -450,7 +408,7 @@ export function Agenda() {
       })
       if (conflict) {
         const pat = patients.find(p => p.id === conflict.patientId)
-        showToast(`El doctor ya tiene cita en ese horario (${pat?.name ?? 'otro paciente'} a las ${conflict.time})`, 'error')
+        showToast(`El fisioterapeuta ya tiene cita en ese horario (${pat?.name ?? 'otro paciente'} a las ${conflict.time})`, 'error')
         return
       }
     }
@@ -613,7 +571,7 @@ export function Agenda() {
             return (
               <div key={block.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
                 <div style={{ minWidth:0 }}>
-                  <div style={{ fontSize:12, fontWeight:800, color:'#9f3040', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{doc?.name ?? 'Doctora'} sin consulta</div>
+                  <div style={{ fontSize:12, fontWeight:800, color:'#9f3040', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{doc?.name ?? 'Fisioterapeuta'} sin consulta</div>
                   <div style={{ fontSize:11, color:'#b55260' }}>{block.reason}</div>
                 </div>
                 <button onClick={() => handleUnblockDay(block.id)} style={{ background:'#fff', border:'1px solid #e5a5ad', color:'#9f3040', borderRadius:8, padding:'6px 9px', fontSize:10, fontWeight:700, flexShrink:0 }}>Reabrir</button>
@@ -734,7 +692,7 @@ export function Agenda() {
 
         {/* Doctors legend */}
         <FadeContent delay={80} style={{ background:'#fff', borderRadius:12, padding:16, boxShadow:'0 4px 16px rgba(0,0,0,0.08)' }}>
-          <p style={{ fontSize:11, fontWeight:700, color:'#8a9ab0', letterSpacing:'0.5px', marginBottom:12 }}>DOCTORES</p>
+          <p style={{ fontSize:11, fontWeight:700, color:'#8a9ab0', letterSpacing:'0.5px', marginBottom:12 }}>FISIOTERAPEUTAS</p>
           {doctors.map(doc => (
             <div key={doc.id} style={{ display:'flex', alignItems:'center', gap:8, marginBottom:8 }}>
               <div style={{ width:8, height:8, borderRadius:'50%', background:doc.color, flexShrink:0 }} />
@@ -787,7 +745,7 @@ export function Agenda() {
                 }}>
                   {mode === 'week'
                     ? <><Icon name="agenda" size={11} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />Semana</>
-                    : <><Icon name="doctors" size={11} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />Por doctor</>
+                    : <><Icon name="doctors" size={11} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />Por fisioterapeuta</>
                   }
                 </button>
               ))}
@@ -1082,7 +1040,7 @@ export function Agenda() {
                 {/* Info grid */}
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
                   {[
-                    { label:'Doctor', value: doc?.name ?? '-' },
+                    { label:'Fisioterapeuta', value: doc?.name ?? '-' },
                     { label:'Especialidad', value: doc?.specialty ?? '-' },
                     { label:'Fecha', value: detailAppt.date },
                     { label:'Horario', value: fmtTimeRange(detailAppt.time, detailAppt.duration) },
@@ -1186,19 +1144,19 @@ export function Agenda() {
               <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16, marginBottom:18 }}>
                 <div>
                   <h2 style={{ fontSize:17, fontWeight:800, color:'#1a2535', margin:0 }}>Bloquear día de consulta</h2>
-                  <p style={{ fontSize:12, color:'#8a9ab0', margin:'4px 0 0' }}>La doctora aparecerá como no disponible durante todo el día.</p>
+                  <p style={{ fontSize:12, color:'#8a9ab0', margin:'4px 0 0' }}>El fisioterapeuta aparecerá como no disponible durante todo el día.</p>
                 </div>
                 <button onClick={() => setShowBlockModal(false)} aria-label="Cerrar" style={{ background:'#f1f5f9', border:'none', borderRadius:8, width:30, height:30, cursor:'pointer', color:'#8a9ab0', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}><Icon name="x" size={15} /></button>
               </div>
 
               <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
                 <div>
-                  <label style={lStyle}>DOCTORA *</label>
+                  <label style={lStyle}>FISIOTERAPEUTA *</label>
                   {myDoctor ? (
                     <input value={myDoctor.name} readOnly style={{ ...iStyle, background:'#f8fafc', color:'#4a5568' }} />
                   ) : (
                     <select value={blockForm.doctor_id} onChange={e => setBlockForm(f => ({ ...f, doctor_id:e.target.value }))} style={iStyle}>
-                      <option value="">Seleccionar doctora...</option>
+                      <option value="">Seleccionar fisioterapeuta...</option>
                       {doctors.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
                     </select>
                   )}
@@ -1326,15 +1284,15 @@ export function Agenda() {
 
               {myDoctor ? (
                 <div>
-                  <label style={lStyle}>DOCTOR</label>
+                  <label style={lStyle}>FISIOTERAPEUTA</label>
                   <input style={{ ...iStyle, background: '#f8fafc', color: '#4a5568' }}
                     value={`${myDoctor.name} - ${myDoctor.specialty}`} readOnly />
                 </div>
               ) : (
                 <div>
-                  <label style={lStyle}>DOCTOR *</label>
+                  <label style={lStyle}>FISIOTERAPEUTA *</label>
                   <select value={form.doctor_id} onChange={e => setForm(f=>({...f, doctor_id:e.target.value}))} style={iStyle}>
-                    <option value="">Seleccionar doctor…</option>
+                    <option value="">Seleccionar fisioterapeuta…</option>
                     {doctors.map(d => <option key={d.id} value={d.id}>{d.name} - {d.specialty}</option>)}
                   </select>
                 </div>
@@ -1440,7 +1398,7 @@ export function Agenda() {
                               formDayBlock ? `Día bloqueado: ${formDayBlock.reason}`
                               : isPast ? 'Hora pasada'
                               : roomConflict ? `Consultorio ocupado: ${patName ?? ''}`
-                              : doctorConflict ? `Doctor ocupado: ${patName ?? ''}`
+                              : doctorConflict ? `Fisioterapeuta ocupado: ${patName ?? ''}`
                               : slot
                             }
                             style={{
@@ -1472,7 +1430,7 @@ export function Agenda() {
                 <div style={{ display:'flex', gap:10, marginTop:4, flexWrap:'wrap' }}>
                   {[
                     { bg:'#fef2f2', border:'#fecaca', label:'Consultorio' },
-                    { bg:'#fffbeb', border:'#fde68a', label:'Doctor' },
+                    { bg:'#fffbeb', border:'#fde68a', label:'Fisioterapeuta' },
                     { bg:'#f5f5f5', border:'#eee',    label:'Hora pasada' },
                   ].map(({ bg, border, label }) => (
                     <div key={label} style={{ display:'flex', alignItems:'center', gap:4 }}>

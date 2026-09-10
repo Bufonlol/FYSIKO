@@ -220,7 +220,7 @@ export function Dashboard() {
         ) : (
           <div className="today-schedule">
             <div className="today-schedule-columns" aria-hidden="true">
-              <span>Hora</span><span>Doctora</span><span>Paciente y tratamiento</span><span>Consultorio</span><span>Estado</span><span>Monto</span>
+              <span>Hora</span><span>Fisioterapeuta</span><span>Paciente y tratamiento</span><span>Consultorio</span><span>Estado</span><span>Monto</span>
             </div>
             {appointmentGroups.map(group => (
               <section className="today-schedule-group" key={group.hour} aria-labelledby={`schedule-${group.hour}`}>
@@ -239,7 +239,7 @@ export function Dashboard() {
                           <div className="today-schedule-avatar" style={{ background: `${doc?.color ?? '#5b84b1'}1f`, color: doc?.color ?? '#5b84b1' }}>
                             {doc ? getInitials(doc.name.replace(/^Dra?\.\s*/i, '')) : '?'}
                           </div>
-                          <div><strong>{doc?.name ?? 'Sin asignar'}</strong><span>{doc?.specialty ?? 'Doctora'}</span></div>
+                          <div><strong>{doc?.name ?? 'Sin asignar'}</strong><span>{doc?.specialty ?? 'Fisioterapeuta'}</span></div>
                         </div>
                         <div className="today-schedule-patient">
                           <span className="today-schedule-range">{formatTimeRange(appt.time, appt.duration)} <small>{appt.duration} min</small></span>

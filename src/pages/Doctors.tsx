@@ -49,7 +49,7 @@ export function Doctors() {
     const { error } = await supabase.from('doctores').delete().eq('id', confirmDel.id)
     if (error) { showToast('Error al eliminar: ' + error.message, 'error'); return }
     setData(prev => prev.filter(d => d.id !== confirmDel.id))
-    showToast('Doctor eliminado', 'success')
+    showToast('Fisioterapeuta eliminado', 'success')
     setConfirmDel(null)
   }
 
@@ -89,7 +89,7 @@ export function Doctors() {
         setData(prev => prev.map(d => d.id === editDoc.id
           ? { ...d, ...payload, weekAppointments: d.weekAppointments, rating: d.rating }
           : d))
-        showToast('Doctor actualizado', 'success')
+        showToast('Fisioterapeuta actualizado', 'success')
         setShowModal(false)
       }
     } else {
@@ -121,7 +121,7 @@ export function Doctors() {
     <div className="app-page doctors-page" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div className="page-toolbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <p style={{ fontSize: 13, color: '#8a9ab0' }}>
-          {loading ? 'Cargando...' : `${filteredDoctors.length} doctores registrados`}
+          {loading ? 'Cargando...' : `${filteredDoctors.length} fisioterapeutas registrados`}
         </p>
         <button onClick={openNew} style={{
           padding: '8px 16px', borderRadius: 8, background: '#8db84a', color: '#fff',
@@ -129,17 +129,17 @@ export function Doctors() {
           display: 'flex', alignItems: 'center', gap: 6,
           boxShadow: '0 4px 12px rgba(141,184,74,0.3)',
         }}>
-          <Icon name="plus" size={14} /> Nuevo doctor
+          <Icon name="plus" size={14} /> Nuevo fisioterapeuta
         </button>
       </div>
 
       {loading ? (
-        <LoadingState label="Cargando doctores" />
+        <LoadingState label="Cargando fisioterapeutas" />
       ) : filteredDoctors.length === 0 ? (
         <EmptyState
           icon="doctors"
-          title={doctors.length === 0 ? 'Sin doctores registrados' : 'Sin resultados'}
-          description={doctors.length === 0 ? 'Agrega el primer doctor al equipo.' : 'Intenta con otro término de búsqueda.'}
+          title={doctors.length === 0 ? 'Sin fisioterapeutas registrados' : 'Sin resultados'}
+          description={doctors.length === 0 ? 'Agrega el primer fisioterapeuta al equipo.' : 'Intenta con otro término de búsqueda.'}
         />
       ) : (
         <div className="card-grid-sm" style={{ gap: 16 }}>
@@ -342,7 +342,7 @@ export function Doctors() {
           <div style={{ background: '#fff', borderRadius: 16, padding: 28, width: '100%', maxWidth: 480, boxShadow: '0 20px 60px rgba(0,0,0,0.2)', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
               <h2 style={{ fontSize: 17, fontWeight: 800, color: '#1a2535', margin: 0 }}>
-                {editDoc ? 'Editar Doctor' : 'Nuevo Doctor'}
+                {editDoc ? 'Editar Fisioterapeuta' : 'Nuevo Fisioterapeuta'}
               </h2>
               <button onClick={() => setShowModal(false)} style={{ background: '#f1f5f9', border: 'none', borderRadius: 8, width: 30, height: 30, cursor: 'pointer', fontSize: 18, color: '#8a9ab0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
             </div>
@@ -351,12 +351,12 @@ export function Doctors() {
               <div>
                 <label style={lStyle}>NOMBRE COMPLETO *</label>
                 <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                  placeholder="Ej: Dra. Ana Martínez" style={iStyle} />
+                  placeholder="Ej: Lic. Ana Martínez" style={iStyle} />
               </div>
               <div>
                 <label style={lStyle}>ESPECIALIDAD *</label>
                 <input value={form.specialty} onChange={e => setForm(f => ({ ...f, specialty: e.target.value }))}
-                  placeholder="Ej: Ortodoncia" style={iStyle} />
+                  placeholder="Ej: Rehabilitación deportiva" style={iStyle} />
               </div>
               <div>
                 <label style={lStyle}>INICIALES (avatar)</label>
@@ -443,14 +443,14 @@ export function Doctors() {
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: 16 }}>
           <div style={{ background: '#fff', borderRadius: 16, padding: 32, width: '100%', maxWidth: 420, boxShadow: '0 24px 80px rgba(0,0,0,0.25)', textAlign: 'center' }}>
             <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#f0f7e6', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}><Icon name="key" size={26} color="#8db84a" /></div>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1a2535', marginBottom: 6 }}>Doctor registrado</h3>
+            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#1a2535', marginBottom: 6 }}>Fisioterapeuta registrado</h3>
             <p style={{ fontSize: 13, color: '#8a9ab0', marginBottom: 24 }}>
               Guarda estas credenciales — la contraseña no se podrá ver después.
             </p>
 
             <div style={{ background: '#f8fafc', borderRadius: 12, padding: 20, marginBottom: 20, border: '1.5px solid #e2e8f0', textAlign: 'left' }}>
               <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginBottom: 4 }}>DOCTOR</div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', marginBottom: 4 }}>FISIOTERAPEUTA</div>
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#1a2535' }}>{newCredentials.name}</div>
               </div>
               <div style={{ marginBottom: 14 }}>
@@ -485,7 +485,7 @@ export function Doctors() {
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: 16 }}>
           <div style={{ background: '#fff', borderRadius: 16, padding: 28, width: '100%', maxWidth: 380, boxShadow: '0 20px 60px rgba(0,0,0,0.2)', textAlign: 'center' }}>
             <div style={{ width: 52, height: 52, borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24 }}>⚠️</div>
-            <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1a2535', marginBottom: 8 }}>¿Eliminar doctor?</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 800, color: '#1a2535', marginBottom: 8 }}>¿Eliminar fisioterapeuta?</h3>
             <p style={{ fontSize: 13, color: '#4a5568', marginBottom: 24 }}>
               Se eliminará a <strong>{confirmDel.name}</strong>. Esta acción no se puede deshacer.
             </p>

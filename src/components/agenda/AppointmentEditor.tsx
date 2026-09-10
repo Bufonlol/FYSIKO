@@ -345,7 +345,7 @@ export function AppointmentEditor() {
                             <strong style={{ fontSize: 12, color: '#334155' }}>{appointment.time}</strong>
                             <span style={{ minWidth: 0 }}>
                               <strong style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12, color: '#1a2535' }}>{patient?.name ?? 'Paciente'}</strong>
-                              <small style={{ display: 'block', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#718096', fontSize: 9 }}>{doctor?.name ?? 'Doctora'} · {appointment.type || 'Sin tratamiento'}</small>
+                              <small style={{ display: 'block', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#718096', fontSize: 9 }}>{doctor?.name ?? 'Fisioterapeuta'} · {appointment.type || 'Sin tratamiento'}</small>
                             </span>
                             <span style={{ padding: '4px 8px', borderRadius: 999, background: '#f1f5f9', color: '#52657a', fontSize: 9, fontWeight: 800 }}>{status}</span>
                           </button>
@@ -392,7 +392,7 @@ export function AppointmentEditor() {
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 11 }}>
                     <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                      <span style={{ fontSize: 9, fontWeight: 800, color: '#718096' }}>DOCTORA</span>
+                      <span style={{ fontSize: 9, fontWeight: 800, color: '#718096' }}>FISIOTERAPEUTA</span>
                       <select disabled={!!myDoctor} value={form.doctorId} onChange={event => setForm(current => current ? { ...current, doctorId: event.target.value } : current)} style={{ padding: '9px 10px', border: '1px solid #d8e1ea', borderRadius: 9, background: myDoctor ? '#f8fafc' : '#fff', fontSize: 12 }}>
                         {doctors.map(doctor => <option key={doctor.id} value={doctor.id}>{doctor.name}</option>)}
                       </select>

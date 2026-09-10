@@ -173,7 +173,7 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
       @media print{body{padding:20px}}
     </style></head><body>
       <h1>FYSIKO</h1>
-      <h2>${doc ? doc.name + ' — ' + doc.specialty : 'Médico'}</h2>
+      <h2>${doc ? doc.name + ' — ' + doc.specialty : 'Fisioterapeuta'}</h2>
       <hr class="sep"/>
       <div class="label">PACIENTE</div><div class="field">${patient.name} &nbsp;·&nbsp; ${patient.age} años</div>
       <div class="label">FECHA</div><div class="field">${new Date(receta.visitDate + 'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'})}</div>
@@ -186,7 +186,7 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
       ${receta.notas ? `<div class="label" style="margin-top:16px">NOTAS</div><div class="field">${receta.notas}</div>` : ''}
       <div class="footer">
         <div style="font-size:12px;color:#8a9ab0">Válida por 30 días</div>
-        <div class="sig">${doc ? doc.name : 'Dr.'}<br><small style="color:#8a9ab0">Firma y sello</small></div>
+        <div class="sig">${doc ? doc.name : 'Lic.'}<br><small style="color:#8a9ab0">Firma y sello</small></div>
       </div>
     </body></html>`)
     win.document.close()
@@ -200,9 +200,9 @@ function ExpedienteModal({ patient, doctors, onClose }: { patient: Patient; doct
     const toothRows = Object.entries(localDientes).filter(([, d]) => d.status !== 'sano')
       .map(([num, d]) => `<tr><td>#${num}</td><td>${toothStatusLabels[d.status] ?? d.status}</td><td style="color:#6b7280">${d.notes || '—'}</td></tr>`).join('')
     const notasHTML = notas.length === 0 ? '<p class="empty">Sin notas clínicas registradas.</p>' :
-      notas.map(n => { const doc = doctors.find(d => d.id === n.doctorId); return `<div class="card"><div class="card-head"><span class="date">${fmt(n.visitDate)}</span><span class="muted">${doc?.name ?? 'Doctor'}</span></div>${n.motivo ? `<div><b>Motivo:</b> ${n.motivo}</div>` : ''}${n.diagnostico ? `<div><b>Diagnóstico:</b> ${n.diagnostico}</div>` : ''}${n.tratamiento ? `<div><b>Tratamiento:</b> ${n.tratamiento}</div>` : ''}${n.indicaciones ? `<div><b>Indicaciones:</b> ${n.indicaciones}</div>` : ''}${n.seguimiento ? `<div><b>Seguimiento:</b> ${n.seguimiento}</div>` : ''}</div>` }).join('')
+      notas.map(n => { const doc = doctors.find(d => d.id === n.doctorId); return `<div class="card"><div class="card-head"><span class="date">${fmt(n.visitDate)}</span><span class="muted">${doc?.name ?? 'Fisioterapeuta'}</span></div>${n.motivo ? `<div><b>Motivo:</b> ${n.motivo}</div>` : ''}${n.diagnostico ? `<div><b>Diagnóstico:</b> ${n.diagnostico}</div>` : ''}${n.tratamiento ? `<div><b>Tratamiento:</b> ${n.tratamiento}</div>` : ''}${n.indicaciones ? `<div><b>Indicaciones:</b> ${n.indicaciones}</div>` : ''}${n.seguimiento ? `<div><b>Seguimiento:</b> ${n.seguimiento}</div>` : ''}</div>` }).join('')
     const recetasHTML = recetas.length === 0 ? '<p class="empty">Sin recetas registradas.</p>' :
-      recetas.map(r => { const doc = doctors.find(d => d.id === r.doctorId); return `<div class="card"><div class="card-head"><span class="date">${fmt(r.visitDate)}</span><span class="muted">${doc?.name ?? 'Doctor'}</span></div>${r.diagnostico ? `<div style="margin-bottom:8px"><b>Diagnóstico:</b> ${r.diagnostico}</div>` : ''}<table><thead><tr><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th></tr></thead><tbody>${r.medicamentos.map(m => `<tr><td>${m.nombre}</td><td>${m.dosis}</td><td>${m.frecuencia}</td><td>${m.duracion}</td></tr>`).join('')}</tbody></table>${r.notas ? `<div style="margin-top:6px;color:#6b7280;font-size:11px">Notas: ${r.notas}</div>` : ''}</div>` }).join('')
+      recetas.map(r => { const doc = doctors.find(d => d.id === r.doctorId); return `<div class="card"><div class="card-head"><span class="date">${fmt(r.visitDate)}</span><span class="muted">${doc?.name ?? 'Fisioterapeuta'}</span></div>${r.diagnostico ? `<div style="margin-bottom:8px"><b>Diagnóstico:</b> ${r.diagnostico}</div>` : ''}<table><thead><tr><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th></tr></thead><tbody>${r.medicamentos.map(m => `<tr><td>${m.nombre}</td><td>${m.dosis}</td><td>${m.frecuencia}</td><td>${m.duracion}</td></tr>`).join('')}</tbody></table>${r.notas ? `<div style="margin-top:6px;color:#6b7280;font-size:11px">Notas: ${r.notas}</div>` : ''}</div>` }).join('')
     const today = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })
     const css = `body{font-family:Arial,sans-serif;color:#1a2535;max-width:780px;margin:0 auto;padding:32px;font-size:13px}.header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #5b84b1;padding-bottom:16px;margin-bottom:24px}h1{font-size:20px;margin:0;color:#5b84b1}.muted{font-size:11px;color:#8a9ab0}.section{margin-bottom:28px}h2{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#5b84b1;border-bottom:1px solid #e2e8f0;padding-bottom:6px;margin-bottom:14px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.lbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:#8a9ab0;margin-bottom:2px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.chip{background:#e8f0f8;color:#5b84b1;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}.card{border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px}.card-head{display:flex;justify-content:space-between;margin-bottom:8px}.date{font-weight:700}.empty{color:#8a9ab0;font-size:12px}table{width:100%;border-collapse:collapse;margin-bottom:8px}th{text-align:left;font-size:10px;letter-spacing:.8px;color:#8a9ab0;font-weight:700;padding:6px 8px;border-bottom:2px solid #e2e8f0;text-transform:uppercase}td{font-size:12px;padding:6px 8px;border-bottom:1px solid #f0f2f5}.footer{margin-top:40px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;font-size:10px;color:#b0bcc8}@media print{body{padding:16px}}`
     const html = `<!DOCTYPE html><html><head><title>Expediente — ${patient.name}</title><meta charset="UTF-8"><style>${css}</style></head><body>
@@ -753,7 +753,7 @@ export function Patients() {
   // Pacientes con información incompleta (típico de altas rápidas desde Agenda)
   function missingFields(p: Patient): string[] {
     const missing: string[] = []
-    if (!p.doctor) missing.push('Doctor por asignar')
+    if (!p.doctor) missing.push('Fisioterapeuta por asignar')
     if (!p.fechaNacimiento) missing.push('Cumpleaños')
     if (!p.age) missing.push('Edad')
     return missing
@@ -902,7 +902,7 @@ export function Patients() {
               <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 720 }}>
                 <thead>
                   <tr style={{ background: '#f8fafc' }}>
-                    {['Paciente', 'Edad', 'Teléfono', 'Email', 'Última visita', 'Próxima cita', 'Doctor', 'Estado', ''].map(h => (
+                    {['Paciente', 'Edad', 'Teléfono', 'Email', 'Última visita', 'Próxima cita', 'Fisioterapeuta', 'Estado', ''].map(h => (
                       <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: '#8a9ab0', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>
                         {h.toUpperCase()}
                       </th>
@@ -1065,7 +1065,7 @@ export function Patients() {
                   {[
                     { label: 'Teléfono', value: detailPatient.phone, icon: 'phone' as const },
                     { label: 'Email', value: detailPatient.email, icon: 'mail' as const },
-                    { label: 'Doctor asignado', value: doc?.name ?? '—', icon: 'doctors' as const },
+                    { label: 'Fisioterapeuta asignado', value: doc?.name ?? '—', icon: 'doctors' as const },
                     { label: 'Especialidad', value: doc?.specialty ?? '—', icon: 'treatments' as const },
                     { label: 'Última visita', value: detailPatient.lastVisit ? new Date(detailPatient.lastVisit).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }) : '—', icon: 'clock' as const },
                     { label: 'Próxima cita', value: detailPatient.nextAppointment ? new Date(detailPatient.nextAppointment).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }) : '—', icon: 'agenda' as const },
@@ -1179,7 +1179,7 @@ export function Patients() {
                 )}
               </div>
               <div>
-                <label style={lStyle}>DOCTOR ASIGNADO</label>
+                <label style={lStyle}>FISIOTERAPEUTA ASIGNADO</label>
                 <select value={form.doctor} onChange={e => setForm(f => ({ ...f, doctor: e.target.value }))} style={iStyle}>
                   <option value="">Sin asignar</option>
                   {doctors.map(d => <option key={d.id} value={d.id}>{d.name} – {d.specialty}</option>)}

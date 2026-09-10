@@ -108,7 +108,7 @@ export function Login() {
             </GradientText>
           </div>
           <ShinyText style={{ fontSize: 16, marginBottom: 32, display: 'block' }}>
-            Gestión clínica, simplificada
+            Fisioterapia, en movimiento
           </ShinyText>
 
           {/* Dental arc SVG */}
@@ -123,13 +123,13 @@ export function Login() {
             <circle cx="150" cy="35" r="3" fill="#7aa3c9" opacity="0.6" />
           </svg>
 
-          <BlurText text="Tu plataforma integral de gestión para negocios modernos" delay={60}
+          <BlurText text="Tu plataforma integral de gestión para clínicas de fisioterapia" delay={60}
             style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, display: 'block', marginBottom: 32 }}
           />
 
           {/* Stats */}
           <div style={{ display: 'flex', gap: 24, justifyContent: 'center' }}>
-            {[['3', 'Sucursales'], ['5', 'Doctores'], ['128', 'Citas/mes']].map(([val, label]) => (
+            {[['3', 'Sucursales'], ['5', 'Fisioterapeutas'], ['128', 'Citas/mes']].map(([val, label]) => (
               <div key={label} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 22, fontWeight: 800, color: '#a8d063' }}>{val}</div>
                 <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>{label}</div>

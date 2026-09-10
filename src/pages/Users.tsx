@@ -9,7 +9,7 @@ import { LoadingState } from '../components/ui/FeedbackState'
 
 const ROLE_COLORS: Record<string, { color: string; bg: string; label: string }> = {
   admin:       { color: '#5b84b1', bg: '#e8f0f8', label: 'Administrador'  },
-  doctor:      { color: '#8db84a', bg: '#edf7e2', label: 'Doctor'         },
+  doctor:      { color: '#8db84a', bg: '#edf7e2', label: 'Fisioterapeuta' },
   recepcion:   { color: '#e07b54', bg: '#fdf0eb', label: 'Recepcionista'  },
   agenda_admin:{ color: '#9b6fce', bg: '#f3eefb', label: 'Agenda Admin'   },
 }
@@ -471,7 +471,7 @@ export function Users() {
                   <label style={lStyle}>Rol *</label>
                   <select style={{ ...iStyle, cursor: 'pointer' }} value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value as any }))}>
                     <option value="admin">Administrador</option>
-                    <option value="doctor">Doctor</option>
+                    <option value="doctor">Fisioterapeuta</option>
                     <option value="recepcion">Recepcionista</option>
                   </select>
                 </div>

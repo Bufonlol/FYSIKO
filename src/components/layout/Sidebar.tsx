@@ -21,7 +21,7 @@ const ALL_SECTIONS: NavSection[] = [
   {
     label: 'Clínica',
     items: [
-      { page: 'doctors',    label: 'Doctores',      icon: 'doctors'    },
+      { page: 'doctors',    label: 'Fisioterapeutas', icon: 'doctors'  },
       { page: 'clinics',    label: 'Consultorios',  icon: 'clinics'    },
     ],
   },
@@ -51,7 +51,7 @@ export function Sidebar() {
 
   const roleBadge: Record<string, { label: string; color: string; bg: string }> = {
     admin:        { label: 'Administrador',  color: '#5b84b1', bg: '#e8f0f8' },
-    doctor:       { label: 'Doctor',         color: '#8db84a', bg: '#edf7e2' },
+    doctor:       { label: 'Fisioterapeuta', color: '#8db84a', bg: '#edf7e2' },
     recepcion:    { label: 'Recepcionista',  color: '#e07b54', bg: '#fdf0eb' },
     agenda_admin: { label: 'Módulo Agenda',  color: '#7c5cbf', bg: '#f0ebfb' },
   }

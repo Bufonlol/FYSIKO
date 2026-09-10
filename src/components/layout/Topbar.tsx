@@ -5,7 +5,7 @@ import { supabase } from '../../lib/supabase'
 
 const pageTitles: Record<string, string> = {
   dashboard: 'Dashboard', agenda: 'Agenda', patients: 'Pacientes',
-  clinics: 'Consultorios', doctors: 'Doctores',
+  clinics: 'Consultorios', doctors: 'Fisioterapeutas',
   reports: 'Reportes', sales: 'Ventas / Facturación', treatments: 'Plan de Tratamientos',
   inventory: 'Inventario', users: 'Gestión de Usuarios', notifications: 'Notificaciones',
   mensajes: 'Mensajes WhatsApp',
@@ -27,7 +27,7 @@ const NOTIF_TYPE: Record<string, { color: string; bg: string; icon: string }> = 
 }
 
 const searchPlaceholders: Record<string, string> = {
-  patients: 'Buscar paciente...', doctors: 'Buscar doctor...',
+  patients: 'Buscar paciente...', doctors: 'Buscar fisioterapeuta...',
 }
 
 const searchablePages = new Set(['patients', 'doctors'])
