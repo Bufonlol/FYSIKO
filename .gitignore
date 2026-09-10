@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# environment variables (keep .env.example)
+.env.local
+.env.*.local
+.env
+
+# editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+
+# documents
+*.docx
+~$*
+
+.vercel
+
+# supabase CLI local cache
+supabase/.temp/
