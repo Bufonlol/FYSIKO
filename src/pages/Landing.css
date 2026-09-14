@@ -5,3 +5,31 @@
 .fs-footer{background:#061a2b;color:white;padding:55px 0 20px}.fs-footer-main{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px}.fs-footer .fs-logo img{filter:invert(1)}.fs-footer p,.fs-footer a,.fs-footer span{color:#9fb0bd;font-size:10px;margin-top:10px;display:block}.fs-legal{border-top:1px solid #263b4b;margin-top:38px;padding-top:18px;display:flex;justify-content:space-between}.fs-wa{position:fixed;right:18px;bottom:18px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#19b965;color:white;z-index:30}.fs-wa svg{width:22px}
 @media(max-width:760px){.fs-wrap{width:calc(100% - 28px)}.fs-header{height:64px}.fs-logo{width:124px;height:47px}.fs-menu{display:block}.fs-nav nav{display:none;position:absolute;top:64px;left:0;right:0;background:white;height:auto;padding:14px 20px 22px;border-bottom:1px solid var(--line)}.fs-nav nav.open{display:flex;flex-direction:column;align-items:stretch;gap:0}.fs-nav nav a{padding:12px}.fs-home{padding:0}.fs-home>.fs-wrap{width:100%;display:flex;flex-direction:column}.fs-home-copy{padding:48px 22px 38px}.fs-home-copy h1{font-size:56px}.fs-home-copy h2{font-size:27px}.fs-home-img{height:350px;order:-1}.fs-home-img img{object-position:61%}.fs-trust>.fs-wrap{width:100%;height:auto;grid-template-columns:1fr}.fs-trust span{height:53px;border-bottom:1px solid var(--line)}.fs-section{padding:65px 0}.fs-two{grid-template-columns:1fr;gap:38px}.fs-heading h2{font-size:44px}.fs-split>.fs-wrap{width:100%;grid-template-columns:1fr}.fs-split img{height:340px}.fs-split>div>div{padding:42px 22px}.fs-split h2{font-size:43px}.fs-actions{display:grid}.fs-btn{justify-content:center}.fs-close h2{font-size:40px}.fs-page-hero>.fs-wrap{width:100%;grid-template-columns:1fr}.fs-page-hero>div>div{padding:50px 22px}.fs-page-hero h1{font-size:48px}.fs-page-hero img{height:310px;order:-1}.fs-services{grid-template-columns:1fr}.fs-services article{min-height:240px}.fs-band>.fs-wrap{display:block}.fs-band .fs-btn{margin-top:25px}.fs-process article{grid-template-columns:36px 42px 1fr}.fs-result>.fs-wrap{width:100%;grid-template-columns:1fr}.fs-result img{height:330px}.fs-result>div>div{padding:43px 22px}.fs-values>.fs-wrap{grid-template-columns:1fr}.fs-values article{border:0;border-top:1px solid var(--line);padding:30px 12px}.fs-contact{grid-template-columns:1fr;gap:45px}.fs-contact aside{padding:34px 25px}.fs-footer-main{grid-template-columns:1fr 1fr}.fs-footer-main>div:first-child{grid-column:1/-1}.fs-legal{display:block;padding-bottom:60px}}
 @media(prefers-reduced-motion:reduce){.fs-site *{transition:none!important}}
+
+/* Vector lockup: no inherited crop, filter or empty bitmap canvas. */
+.fs-logo{width:156px;height:auto;overflow:visible;line-height:0}
+.fs-logo img{display:block;width:100%;height:auto;object-fit:initial;filter:none}
+.fs-footer .fs-logo img{filter:brightness(0) invert(1)}
+
+@media(max-width:760px){
+  .fs-header{height:62px}
+  .fs-nav{width:calc(100% - 34px)}
+  .fs-logo{width:142px;height:auto}
+  .fs-nav nav{top:62px}
+  .fs-menu{width:42px;height:42px;display:grid;place-items:center;padding:0}
+  .fs-menu svg{width:28px;height:28px;stroke-width:1.7}
+
+  .fs-home{background:var(--navy)}
+  .fs-home>.fs-wrap{height:min(720px,calc(100svh - 62px));min-height:620px;position:relative;display:block}
+  .fs-home-img{position:absolute;inset:0;height:auto;order:initial}
+  .fs-home-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,20,34,.03) 18%,rgba(4,20,34,.2) 48%,rgba(4,20,34,.96) 100%)}
+  .fs-home-img img{position:absolute;inset:0;width:100%;height:100%;object-position:58% center}
+  .fs-home-img small{display:none}
+  .fs-home-copy{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:42px 24px 34px;color:white}
+  .fs-home-copy>span{color:#63c0ff;font-size:10px}
+  .fs-home-copy h1{max-width:330px;margin:12px 0 5px;color:white;font-size:55px;line-height:.86}
+  .fs-home-copy h2{margin:0 0 13px;color:white;font-size:27px}
+  .fs-home-copy p{max-width:340px;margin:0;color:#d7e2e9;font-size:12px;line-height:1.55}
+  .fs-home-copy .fs-btn{margin-top:18px;width:auto;min-height:44px}
+  .fs-trust{background:white}
+}
