@@ -3,7 +3,7 @@ import {Activity,ArrowRight,CalendarDays,Check,ChevronRight,Clock,Dumbbell,Heart
 import './Landing.css'
 const WA='https://wa.me/522723565429?text=Hola%20FYSIKO%2C%20quiero%20agendar%20una%20valoraci%C3%B3n.'
 const nav=[['/','Inicio'],['/servicios','Servicios'],['/proceso','Proceso'],['/nosotros','Nosotros'],['/contacto','Contacto']]
-function Logo(){return <a className="fs-logo" href="/"><img src="/fysiko/logo-real.png" alt="FYSIKO"/></a>}
+function Logo(){return <a className="fs-logo" href="/" aria-label="FYSIKO, inicio"><img src="/fysiko/logo.svg" alt="FYSIKO"/></a>}
 function Header(){const[o,setO]=useState(false);return <header className="fs-header"><div className="fs-wrap fs-nav"><Logo/><nav className={o?'open':''}>{nav.map(([h,l])=><a className={location.pathname===h?'active':''} href={h} key={h}>{l}</a>)}<a className="fs-nav-cta" href={WA}><CalendarDays/>Agendar cita</a></nav><button className="fs-menu" onClick={()=>setO(!o)}>{o?<X/>:<Menu/>}</button></div></header>}
 function Footer(){return <footer className="fs-footer"><div className="fs-wrap fs-footer-main"><div><Logo/><p>Movimiento real.<br/>Vida sin límites.</p></div><div><b>Explora</b>{nav.slice(1).map(([h,l])=><a href={h} key={h}>{l}</a>)}</div><div><b>Contacto</b><a href="tel:+522723565429">272 356 5429</a><span>Nte. 6 #911, Orizaba, Ver.</span><a href="https://instagram.com/fysiko.rhb">@fysiko.rhb</a></div></div><div className="fs-wrap fs-legal"><span>© {new Date().getFullYear()} FYSIKO.</span><a href="/admin">Acceso administrativo</a></div></footer>}
 function Layout({children}:{children:React.ReactNode}){return <main className="fs-site"><Header/>{children}<Footer/><a className="fs-wa" href={WA}><MessageCircle/></a></main>}
