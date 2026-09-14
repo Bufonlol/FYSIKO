@@ -83,6 +83,10 @@
 @keyframes fs-bolts-fast{0%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(.65)}35%,68%{opacity:1;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1.06)}}
 @keyframes fs-word-fast{to{opacity:1;transform:translateY(0)}}
 
+.fs-home-img,.fs-page-hero,.fs-split,.fs-result{overflow:hidden}
+.fs-home-img>img,.fs-page-hero img,.fs-split img,.fs-result img{animation:fs-art-settle 1s cubic-bezier(.2,.8,.2,1) both;transform-origin:center}
+@keyframes fs-art-settle{from{opacity:.2;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}
+
 .fs-menu-heading{display:none}
 .fs-menu-links{display:flex;align-items:center;gap:30px}
 .fs-menu-links a{font-size:12px;font-weight:650;color:#53616b}
