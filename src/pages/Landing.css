@@ -68,16 +68,16 @@
 @keyframes fs-clean-word-exit{to{opacity:1;transform:translateY(0)}}
 
 /* Fast entry: wordmark only. Lightning is reserved for route changes. */
-.fs-transition{animation:fs-reveal .48s cubic-bezier(.76,0,.24,1) .28s forwards}
+.fs-transition{animation:fs-reveal .36s cubic-bezier(.76,0,.24,1) .34s forwards}
 .fs-electric-line,.fs-impact,.fs-bolts span{animation:none;opacity:0}
 .fs-transition-mark b{opacity:1;transform:none;animation:none}
-.fs-leaving .fs-transition{animation:fs-cover .24s cubic-bezier(.76,0,.24,1) forwards}
-.fs-leaving .fs-electric-line{animation:fs-line-fast .2s steps(5,end) .22s forwards}
-.fs-leaving .fs-impact{animation:fs-impact-fast .16s ease-out .4s forwards}
-.fs-leaving .fs-bolts span{animation:fs-bolts-fast .2s cubic-bezier(.2,.8,.2,1) .41s forwards}
-.fs-leaving .fs-bolts span:nth-child(2){animation-delay:.43s}
-.fs-leaving .fs-bolts span:nth-child(3){animation-delay:.45s}
-.fs-leaving .fs-transition-mark b{opacity:0;transform:translateY(10px);animation:fs-word-fast .16s ease .52s forwards}
+.fs-leaving .fs-transition{animation:fs-cover .26s cubic-bezier(.76,0,.24,1) forwards}
+.fs-leaving .fs-electric-line{animation:fs-line-fast .3s steps(7,end) .27s forwards}
+.fs-leaving .fs-impact{animation:fs-impact-fast .2s ease-out .55s forwards}
+.fs-leaving .fs-bolts span{animation:fs-bolts-fast .3s cubic-bezier(.2,.8,.2,1) .57s forwards}
+.fs-leaving .fs-bolts span:nth-child(2){animation-delay:.6s}
+.fs-leaving .fs-bolts span:nth-child(3){animation-delay:.63s}
+.fs-leaving .fs-transition-mark b{opacity:0;transform:translateY(10px);animation:fs-word-fast .18s ease .79s forwards}
 @keyframes fs-line-fast{0%{width:0;opacity:0}20%{opacity:1}40%{opacity:.15}60%{opacity:1}100%{width:90vw;opacity:0}}
 @keyframes fs-impact-fast{0%{opacity:1;transform:translate(-50%,-50%) scale(.5);box-shadow:0 0 18px 8px white}100%{opacity:0;transform:translate(-50%,-50%) scale(22);box-shadow:0 0 0 transparent}}
 @keyframes fs-bolts-fast{0%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(.65)}35%,68%{opacity:1;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1.06)}}
