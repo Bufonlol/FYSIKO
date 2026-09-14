@@ -40,7 +40,7 @@
 @keyframes fs-bolt-vanish-exit{to{opacity:0;transform:translate3d(-50%,-50%,0) scale(1.18)}}
 
 /* Simplified electric sequence: charge, impact, bolts, wordmark. */
-.fs-transition{background:#087fda}
+.fs-transition{background:#08233d}
 .fs-transition::before,.fs-transition::after,.fs-transition-slash,.fs-transition-progress,.fs-transition>small,.fs-bolt-fall{display:none}
 .fs-electric-line{position:absolute;z-index:5;left:50%;top:50%;width:0;height:2px;background:white;transform:translate(-50%,-50%);box-shadow:0 0 8px white,0 0 22px rgba(255,255,255,.9);animation:fs-line-charge .46s steps(7,end) .05s forwards}
 .fs-impact{z-index:2;width:8px;height:8px;border-color:white;animation:fs-clean-impact .28s ease-out .46s forwards}
