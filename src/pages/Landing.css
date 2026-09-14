@@ -39,6 +39,34 @@
 @keyframes fs-bolt-vanish{to{opacity:0;transform:translate3d(-50%,-50%,0) scale(1.18)}}
 @keyframes fs-bolt-vanish-exit{to{opacity:0;transform:translate3d(-50%,-50%,0) scale(1.18)}}
 
+/* Simplified electric sequence: charge, impact, bolts, wordmark. */
+.fs-transition{background:#087fda}
+.fs-transition::before,.fs-transition::after,.fs-transition-slash,.fs-transition-progress,.fs-transition>small,.fs-bolt-fall{display:none}
+.fs-electric-line{position:absolute;z-index:5;left:50%;top:50%;width:0;height:2px;background:white;transform:translate(-50%,-50%);box-shadow:0 0 8px white,0 0 22px rgba(255,255,255,.9);animation:fs-line-charge .46s steps(7,end) .05s forwards}
+.fs-impact{z-index:2;width:8px;height:8px;border-color:white;animation:fs-clean-impact .28s ease-out .46s forwards}
+.fs-bolts{position:absolute;inset:0;z-index:4}
+.fs-bolts span{--x:0px;--r:0deg;position:absolute;left:50%;top:50%;width:clamp(72px,7vw,105px);height:clamp(135px,15vw,205px);overflow:hidden;opacity:0;animation:fs-bolts-pop .34s cubic-bezier(.2,.8,.2,1) .48s forwards}
+.fs-bolts span img{display:block;height:100%;width:auto;max-width:none;filter:brightness(0) invert(1)}
+.fs-bolts span:nth-child(1){--x:-105px;--r:-10deg;animation-delay:.48s}
+.fs-bolts span:nth-child(2){--x:0px;--r:0deg;width:clamp(88px,9vw,125px);height:clamp(165px,19vw,250px);animation-delay:.51s}
+.fs-bolts span:nth-child(3){--x:105px;--r:10deg;animation-delay:.54s}
+.fs-transition-mark b{margin:0;opacity:0;font-size:clamp(62px,10vw,148px);animation:fs-clean-word .28s ease .72s forwards}
+.fs-leaving .fs-transition{animation-duration:.34s}
+.fs-leaving .fs-electric-line{animation:fs-line-charge-exit .38s steps(7,end) .34s forwards}
+.fs-leaving .fs-impact{animation:fs-clean-impact-exit .24s ease-out .7s forwards}
+.fs-leaving .fs-bolts span{animation-name:fs-bolts-pop-exit;animation-delay:.71s}
+.fs-leaving .fs-bolts span:nth-child(2){animation-delay:.74s}
+.fs-leaving .fs-bolts span:nth-child(3){animation-delay:.77s}
+.fs-leaving .fs-transition-mark b{animation:fs-clean-word-exit .22s ease .84s forwards}
+@keyframes fs-line-charge{0%{width:0;opacity:0}14%{opacity:1}28%{opacity:.18}42%{opacity:1}58%{opacity:.25}76%{width:72vw;opacity:1}100%{width:92vw;opacity:0}}
+@keyframes fs-line-charge-exit{0%{width:0;opacity:0}14%{opacity:1}28%{opacity:.18}42%{opacity:1}58%{opacity:.25}76%{width:72vw;opacity:1}100%{width:92vw;opacity:0}}
+@keyframes fs-clean-impact{0%{opacity:1;transform:translate(-50%,-50%) scale(.5);box-shadow:0 0 18px 8px white}100%{opacity:0;transform:translate(-50%,-50%) scale(28);box-shadow:0 0 0 transparent}}
+@keyframes fs-clean-impact-exit{0%{opacity:1;transform:translate(-50%,-50%) scale(.5);box-shadow:0 0 18px 8px white}100%{opacity:0;transform:translate(-50%,-50%) scale(28);box-shadow:0 0 0 transparent}}
+@keyframes fs-bolts-pop{0%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(.55)}35%,72%{opacity:1;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1.08)}}
+@keyframes fs-bolts-pop-exit{0%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(.55)}35%,72%{opacity:1;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),-50%) rotate(var(--r)) scale(1.08)}}
+@keyframes fs-clean-word{to{opacity:1;transform:translateY(0)}}
+@keyframes fs-clean-word-exit{to{opacity:1;transform:translateY(0)}}
+
 .fs-menu-heading{display:none}
 .fs-menu-links{display:flex;align-items:center;gap:30px}
 .fs-menu-links a{font-size:12px;font-weight:650;color:#53616b}
