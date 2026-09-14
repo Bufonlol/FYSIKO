@@ -14,6 +14,7 @@ import { Doctors } from './pages/Doctors'
 import { Notifications } from './pages/Notifications'
 import { Users } from './pages/Users'
 import type { PageName } from './types'
+import { Landing } from './pages/Landing'
 
 const PAGES: Record<string, JSX.Element> = {
   dashboard:     <Dashboard />,
@@ -34,6 +35,7 @@ const ROLE_PAGES: Record<string, PageName[]> = {
 }
 
 export default function App() {
+  const isAdminRoute = window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/')
   const { isLoggedIn, currentPage, pageKey, currentUser, initAuth, logout } = useStore()
 
   useEffect(() => {
@@ -43,6 +45,8 @@ export default function App() {
     })
     return () => subscription.unsubscribe()
   }, [])
+
+  if (!isAdminRoute) return <Landing />
 
   if (!isLoggedIn) return <Login />
 
