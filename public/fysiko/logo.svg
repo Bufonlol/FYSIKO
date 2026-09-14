@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" role="img" aria-labelledby="title">
+  <title id="title">FYSIKO</title>
+  <g fill="#08233d">
+    <path d="M39 2 8 29l16 14L8 70h16l32-28-16-14L57 13z"/>
+    <path d="M42 2h17l23 20-9 8z"/>
+    <path d="M29 8 68 41l-8 7L20 14z"/>
+    <path d="M17 18 55 51l-8 7L8 25z"/>
+    <path d="M43 70H27l-8-7 9-8z"/>
+  </g>
+  <text x="91" y="48" fill="#08233d" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="900" letter-spacing="-2">FYSIKO.</text>
+</svg>
