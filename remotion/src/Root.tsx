@@ -1,8 +1,7 @@
 import React from 'react'
 import { Composition } from 'remotion'
 import { FysikoPromo, TOTAL_DURATION } from './FysikoPromo'
-import { CoyoLaunch } from './coyo/CoyoLaunch'
-import { TOTAL_FRAMES } from './coyo/timeline'
+import { CoyoLaunch, TOTAL_FRAMES } from './coyo/CoyoLaunch'
 
 export const Root: React.FC = () => {
   return (

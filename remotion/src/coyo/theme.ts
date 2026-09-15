@@ -5,8 +5,10 @@ export const c = {
   navyDeep: '#04121f',
   blue: '#0e9aef',
   blueSoft: '#63c4ff',
+  blueDeep: '#0b7bc4',
   ink: '#10283c',
   white: '#ffffff',
+  cream: '#eef5f8',
   studio: '#0a0a0c',
   studioLine: 'rgba(255,255,255,0.14)',
 }
