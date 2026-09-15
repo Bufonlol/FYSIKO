@@ -70,7 +70,7 @@ export function AccentLine({ frame, in: inStart, hold, out, width, style }: { fr
       style={{
         width: width * p,
         height: 3,
-        background: 'linear-gradient(90deg, transparent, #63c4ff, transparent)',
+        background: 'linear-gradient(90deg, transparent, #0e9aef, transparent)',
         ...style,
       }}
     />

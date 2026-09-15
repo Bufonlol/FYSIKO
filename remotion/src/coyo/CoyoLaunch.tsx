@@ -1,5 +1,5 @@
 import React from 'react'
-import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion'
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from 'remotion'
 import { TransitionSeries, linearTiming } from '@remotion/transitions'
 import { fade } from '@remotion/transitions/fade'
 import { slide } from '@remotion/transitions/slide'
@@ -10,8 +10,8 @@ import { seg, windowP, EASE, EASE_OUT, EASE_IN } from './timeline'
 import { Phone3D, GroundShadow, PhoneT } from './Phone3D'
 import { ScreenImage } from './ScreenContent'
 import { KineticLine, AccentLine } from './KineticText'
+import { BlobField } from './BlobField'
 
-const BG = `radial-gradient(1400px 1000px at 50% 8%, #0d3a63 0%, ${c.navy} 42%, ${c.navyDeep} 100%)`
 const T = 18 // shared transition length
 
 // Real pixel offsets measured from the live captures (public/captures/manifest.json),
@@ -36,9 +36,11 @@ const SCENE_DURATIONS = [80, 110, 120, 120, 122, 106, 140]
 export const TOTAL_FRAMES = SCENE_DURATIONS.reduce((a, b) => a + b, 0) - T * (SCENE_DURATIONS.length - 1)
 
 export function CoyoLaunch() {
+  const { width, height } = useVideoConfig()
   return (
-    <AbsoluteFill style={{ background: BG, fontFamily: body, overflow: 'hidden' }}>
+    <AbsoluteFill style={{ fontFamily: body, overflow: 'hidden' }}>
       <style>{FONT_FACE_CSS}</style>
+      <BlobField width={width} height={height} />
       <Grain />
 
       <TransitionSeries>
@@ -114,11 +116,11 @@ function Hook({ duration }: { duration: number }) {
     <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ transform: `scale(${groupScale})`, opacity: groupExit, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
         <KineticLine frame={frame} in={4} hold={20} out={duration - 6}>
-          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 158, lineHeight: 0.86, color: '#fff', letterSpacing: -2 }}>FYSIKO</div>
+          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 158, lineHeight: 0.86, color: c.ink, letterSpacing: -2 }}>FYSIKO</div>
         </KineticLine>
         <AccentLine frame={frame} in={20} hold={28} out={duration - 6} width={280} style={{ margin: '10px 0 18px' }} />
         <KineticLine frame={frame} in={26} hold={42} out={duration - 6}>
-          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 52, letterSpacing: 1, color: c.blueSoft, textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 52, letterSpacing: 1, color: c.blueDeep, textTransform: 'uppercase' }}>
             Ya tiene nueva web.
           </div>
         </KineticLine>
@@ -131,7 +133,7 @@ function Hook({ duration }: { duration: number }) {
           bottom: 0,
           left: flashX,
           width: 30,
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), #bfe3ff, transparent)',
+          background: `linear-gradient(90deg, transparent, ${c.ink}, ${c.blue}, transparent)`,
           filter: 'blur(2px)',
         }}
       />
@@ -163,12 +165,12 @@ function Reveal({ duration }: { duration: number }) {
 
       <div style={{ position: 'absolute', inset: 0, top: 120, zIndex: 0 }}>
         <KineticLine frame={frame} in={15} hold={45} out={duration + 6} style={{ textAlign: 'left', paddingLeft: 64 }}>
-          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 118, lineHeight: 0.86, color: '#fff', letterSpacing: -1 }}>FISIOTERAPIA</div>
+          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 118, lineHeight: 0.86, color: c.ink, letterSpacing: -1 }}>FISIOTERAPIA</div>
         </KineticLine>
       </div>
       <div style={{ position: 'absolute', inset: 0, top: 1560, zIndex: 0 }}>
         <KineticLine frame={frame} in={55} hold={85} out={duration + 6} style={{ textAlign: 'right', paddingRight: 56 }}>
-          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 46, color: c.blueSoft, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 46, color: c.blueDeep, letterSpacing: 0.5, textTransform: 'uppercase' }}>
             Ahora también
             <br />
             en digital.
@@ -237,7 +239,7 @@ function Flow({ duration }: { duration: number }) {
 }
 
 function Word({ children }: { children: React.ReactNode }) {
-  return <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 68, color: '#fff', letterSpacing: 0.5 }}>{children}</div>
+  return <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 68, color: c.ink, letterSpacing: 0.5 }}>{children}</div>
 }
 
 // ─────────────────────────── SCENE 4 — SERVICES ───────────────────────────
@@ -282,14 +284,14 @@ function Services({ duration }: { duration: number }) {
 
       <div style={{ position: 'absolute', top: 150, left: 0, right: 0, textAlign: 'center' }}>
         <KineticLine frame={frame} in={2} hold={20} out={46} style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 88, lineHeight: 0.9, color: '#fff', letterSpacing: -1 }}>
+          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 88, lineHeight: 0.9, color: c.ink, letterSpacing: -1 }}>
             CONOCE SUS
             <br />
             SERVICIOS.
           </div>
         </KineticLine>
         <KineticLine frame={frame} in={48} hold={66} out={100} style={{ display: 'flex', justifyContent: 'center', marginTop: 18 }}>
-          <div style={{ fontFamily: headline, fontWeight: 700, fontSize: 38, color: c.blueSoft, textTransform: 'uppercase', letterSpacing: 1 }}>
+          <div style={{ fontFamily: headline, fontWeight: 700, fontSize: 38, color: c.blueDeep, textTransform: 'uppercase', letterSpacing: 1 }}>
             Antes de llegar a consulta.
           </div>
         </KineticLine>
@@ -347,12 +349,12 @@ function Detail({ duration }: { duration: number }) {
 
       <div style={{ position: 'absolute', left: 0, right: 0, top: 100, textAlign: 'center', zIndex: 3 }}>
         <KineticLine frame={frame} in={8} hold={26} out={duration - 20}>
-          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 76, color: '#fff', letterSpacing: -0.5 }}>UNA EXPERIENCIA</div>
+          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 76, color: c.ink, letterSpacing: -0.5 }}>UNA EXPERIENCIA</div>
         </KineticLine>
       </div>
       <div style={{ position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', zIndex: 3 }}>
         <KineticLine frame={frame} in={22} hold={40} out={duration - 12}>
-          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 50, color: c.blueSoft, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 50, color: c.blueDeep, textTransform: 'uppercase', letterSpacing: 0.5 }}>
             A la altura de su marca.
           </div>
         </KineticLine>
@@ -397,13 +399,13 @@ function Contact({ duration }: { duration: number }) {
 
       <div style={{ position: 'absolute', top: 132, left: 0, right: 0, textAlign: 'center' }}>
         <KineticLine frame={frame} in={4} hold={22} out={78}>
-          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 74, color: '#fff', letterSpacing: -0.5 }}>TODO EN UN SOLO LUGAR.</div>
+          <div style={{ fontFamily: headline, fontWeight: 900, fontSize: 74, color: c.ink, letterSpacing: -0.5 }}>TODO EN UN SOLO LUGAR.</div>
         </KineticLine>
       </div>
 
       <div style={{ position: 'absolute', bottom: 150, left: 0, right: 0, textAlign: 'center' }}>
         <KineticLine frame={frame} in={40} hold={58} out={duration + 2}>
-          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 92, color: c.blueSoft, letterSpacing: 1 }}>fysiko.net</div>
+          <div style={{ fontFamily: headline, fontWeight: 800, fontSize: 92, color: c.blueDeep, letterSpacing: 1 }}>fysiko.net</div>
         </KineticLine>
       </div>
     </AbsoluteFill>
