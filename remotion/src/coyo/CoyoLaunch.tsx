@@ -8,11 +8,29 @@ import { flip } from '@remotion/transitions/flip'
 import { c, headline, body, FONT_FACE_CSS } from './theme'
 import { seg, windowP, EASE, EASE_OUT, EASE_IN } from './timeline'
 import { Phone3D, GroundShadow, PhoneT } from './Phone3D'
-import { ScrollReel, ScreenImage, PagedScreen } from './ScreenContent'
+import { ScreenImage } from './ScreenContent'
 import { KineticLine, AccentLine } from './KineticText'
 
 const BG = `radial-gradient(1400px 1000px at 50% 8%, #0d3a63 0%, ${c.navy} 42%, ${c.navyDeep} 100%)`
 const T = 18 // shared transition length
+
+// Real pixel offsets measured from the live captures (public/captures/manifest.json),
+// converted into the phone-screen display space (capture width 1440 -> screen 588).
+const SCALE = 588 / 1440
+const HOME = {
+  hero: 178 * SCALE,
+  pain: { top: 2604 * SCALE, h: 2169 * SCALE },
+  services: { top: 5423 * SCALE, h: 1810 * SCALE },
+  process: { top: 7377 * SCALE, h: 1497 * SCALE },
+  about: 8874 * SCALE,
+  sport: 11086 * SCALE,
+}
+const SERVICIOS = {
+  top: 178 * SCALE,
+  catalog: 1928 * SCALE,
+  conditions: 3873 * SCALE,
+}
+const VIEWPORT = 1312 // phone screen inner height
 
 const SCENE_DURATIONS = [80, 110, 120, 120, 122, 106, 140]
 export const TOTAL_FRAMES = SCENE_DURATIONS.reduce((a, b) => a + b, 0) - T * (SCENE_DURATIONS.length - 1)
@@ -160,7 +178,7 @@ function Reveal({ duration }: { duration: number }) {
 
       <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
         <Phone3D t={t}>
-          <ScreenImage src="hero" />
+          <ScreenImage src="page_home" pan={HOME.hero} />
         </Phone3D>
       </div>
     </AbsoluteFill>
@@ -180,14 +198,18 @@ function Flow({ duration }: { duration: number }) {
   ])
   const t: PhoneT = { ...REST_T, scale: push }
 
+  const painCenter = HOME.pain.top + HOME.pain.h / 2 - VIEWPORT / 2
+  const servicesCenter = HOME.services.top + HOME.services.h / 2 - VIEWPORT / 2
+  const processCenter = HOME.process.top + HOME.process.h / 2 - VIEWPORT / 2
+
   const scrollY = seg(frame, [
-    { f: 0, v: 0 },
-    { f: 30, v: 0 },
-    { f: 55, v: 806 },
-    { f: 65, v: 806 },
-    { f: 85, v: 1950 },
-    { f: 95, v: 1950 },
-    { f: duration - 5, v: 2156 },
+    { f: 0, v: HOME.hero },
+    { f: 30, v: HOME.hero },
+    { f: 55, v: painCenter },
+    { f: 65, v: painCenter },
+    { f: 85, v: servicesCenter },
+    { f: 95, v: servicesCenter },
+    { f: duration - 5, v: processCenter },
   ])
 
   return (
@@ -195,7 +217,7 @@ function Flow({ duration }: { duration: number }) {
       <GroundShadow opacity={0.42} width={480} blur={56} />
       <div style={{ position: 'absolute', inset: 0 }}>
         <Phone3D t={t}>
-          <ScrollReel images={['hero', 'pain', 'services', 'process']} scrollY={scrollY} />
+          <ScreenImage src="page_home" pan={scrollY} />
         </Phone3D>
       </div>
 
@@ -242,18 +264,20 @@ function Services({ duration }: { duration: number }) {
   ])
   const t: PhoneT = { ...REST_T, y, scale, rotY }
 
+  const pan = seg(frame, [
+    { f: 0, v: SERVICIOS.top },
+    { f: 30, v: SERVICIOS.top },
+    { f: 55, v: SERVICIOS.catalog },
+    { f: 75, v: SERVICIOS.catalog },
+    { f: 95, v: SERVICIOS.conditions },
+    { f: duration - 10, v: SERVICIOS.conditions },
+  ])
+
   return (
     <AbsoluteFill>
       <GroundShadow opacity={0.4} width={460} blur={54} />
       <Phone3D t={t}>
-        <PagedScreen
-          frame={frame}
-          pages={[
-            { src: 'services_top', from: 0, to: 46 },
-            { src: 'services_catalog', from: 46, to: 84 },
-            { src: 'conditions', from: 84, to: duration },
-          ]}
-        />
+        <ScreenImage src="page_servicios" pan={pan} />
       </Phone3D>
 
       <div style={{ position: 'absolute', top: 150, left: 0, right: 0, textAlign: 'center' }}>
@@ -295,10 +319,17 @@ function Detail({ duration }: { duration: number }) {
   const t: PhoneT = { ...REST_T, scale, rotY, y: -60 }
   const scrimOpacity = windowP(frame, 2, 16, duration - 14, duration + 6)
 
+  const pan = seg(frame, [
+    { f: 0, v: HOME.about },
+    { f: 50, v: HOME.about + 150 },
+    { f: 70, v: HOME.sport - 100 },
+    { f: duration, v: HOME.sport + 280 },
+  ])
+
   return (
     <AbsoluteFill>
       <Phone3D t={t}>
-        <PagedScreen frame={frame} switchDur={22} pages={[{ src: 'about', from: 0, to: 65 }, { src: 'sport', from: 65, to: duration }]} />
+        <ScreenImage src="page_home" pan={pan} />
       </Phone3D>
 
       <div
@@ -348,7 +379,7 @@ function Contact({ duration }: { duration: number }) {
     <AbsoluteFill>
       <GroundShadow opacity={0.4} width={460} blur={54} />
       <Phone3D t={t}>
-        <ScreenImage src="contact_page" pan={30} />
+        <ScreenImage src="page_contacto" pan={50} />
         <div
           style={{
             position: 'absolute',
@@ -403,7 +434,7 @@ function Signature({ duration }: { duration: number }) {
     <AbsoluteFill>
       {frame < exitEnd + 2 && (
         <Phone3D t={t}>
-          <ScreenImage src="contact_page" pan={30} />
+          <ScreenImage src="page_contacto" pan={50} />
         </Phone3D>
       )}
 

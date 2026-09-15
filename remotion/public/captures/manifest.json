@@ -1,0 +1,96 @@
+{
+  "page_home": {
+    "hero": {
+      "top": 178,
+      "height": 1632
+    },
+    "pain": {
+      "top": 2604,
+      "height": 2169
+    },
+    "services": {
+      "top": 5423,
+      "height": 1810
+    },
+    "process": {
+      "top": 7377,
+      "height": 1497
+    },
+    "about": {
+      "top": 8874,
+      "height": 2212
+    },
+    "sport": {
+      "top": 11086,
+      "height": 1248
+    },
+    "testimonials": {
+      "top": 14676,
+      "height": 1641
+    },
+    "contact_home": {
+      "top": 19564,
+      "height": 2044
+    },
+    "footer": {
+      "top": 21752,
+      "height": 1232
+    }
+  },
+  "page_servicios": {
+    "top": {
+      "top": 178,
+      "height": 1017
+    },
+    "catalog": {
+      "top": 1928,
+      "height": 1946
+    },
+    "conditions": {
+      "top": 3873,
+      "height": 1776
+    },
+    "choice": {
+      "top": 5650,
+      "height": 1815
+    }
+  },
+  "page_proceso": {
+    "top": {
+      "top": 178,
+      "height": 1134
+    },
+    "list": {
+      "top": 1455,
+      "height": 1154
+    }
+  },
+  "page_nosotros": {
+    "top": {
+      "top": 178,
+      "height": 841
+    },
+    "editorial": {
+      "top": 1162,
+      "height": 748
+    }
+  },
+  "page_contacto": {
+    "top": {
+      "top": 178,
+      "height": 841
+    },
+    "location": {
+      "top": 1162,
+      "height": 1179
+    },
+    "contactCard": {
+      "top": 2399,
+      "height": 864
+    },
+    "faq": {
+      "top": 3551,
+      "height": 745
+    }
+  }
+}
