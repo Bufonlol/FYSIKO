@@ -2,9 +2,9 @@ import React from 'react'
 import { colors, shadowLg } from './theme'
 
 export const DESKTOP_W = 1180
-export const DESKTOP_H = 760
-export const PHONE_W = 340
-export const PHONE_H = 760
+export const DESKTOP_H = 700
+export const PHONE_W = 320
+export const PHONE_H = 700
 
 export function DesktopFrame({
   children,
@@ -22,7 +22,7 @@ export function DesktopFrame({
         background: colors.white,
         boxShadow: shadowLg,
         overflow: 'hidden',
-        border: `1px solid ${colors.border}`,
+        border: `1px solid ${colors.line}`,
         display: 'flex',
         flexDirection: 'column',
         ...style,
@@ -37,7 +37,7 @@ export function DesktopFrame({
           alignItems: 'center',
           gap: 8,
           padding: '0 14px',
-          borderBottom: `1px solid ${colors.border}`,
+          borderBottom: `1px solid ${colors.line}`,
         }}
       >
         <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#f0605a' }} />
@@ -51,7 +51,7 @@ export function DesktopFrame({
             maxWidth: 420,
             borderRadius: 6,
             background: '#fff',
-            border: `1px solid ${colors.border}`,
+            border: `1px solid ${colors.line}`,
             display: 'flex',
             alignItems: 'center',
             padding: '0 10px',
@@ -61,10 +61,10 @@ export function DesktopFrame({
             letterSpacing: 0.2,
           }}
         >
-          app.fysiko.mx
+          fysiko.mx
         </div>
       </div>
-      <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>{children}</div>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>{children}</div>
     </div>
   )
 }
@@ -93,7 +93,7 @@ export function PhoneFrame({
           width: '100%',
           height: '100%',
           borderRadius: 30,
-          background: colors.bg,
+          background: colors.white,
           overflow: 'hidden',
           position: 'relative',
           display: 'flex',
@@ -123,7 +123,7 @@ export function PhoneFrame({
             padding: '0 22px',
             fontSize: 12,
             fontWeight: 700,
-            color: colors.text,
+            color: colors.ink,
           }}
         >
           <span>9:41</span>
@@ -133,7 +133,7 @@ export function PhoneFrame({
             <span>100%</span>
           </span>
         </div>
-        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>{children}</div>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>{children}</div>
         <div
           style={{
             position: 'absolute',

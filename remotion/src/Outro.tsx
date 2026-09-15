@@ -1,7 +1,7 @@
 import React from 'react'
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion'
-import { colors, fontFamily } from './theme'
-import { Logo } from './MockUI'
+import { colors, fontFamily, headlineFamily } from './theme'
+import logo from './art/logo'
 
 export function Outro() {
   const frame = useCurrentFrame()
@@ -15,7 +15,7 @@ export function Outro() {
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(135deg, ${colors.blue}, ${colors.green})`,
+        background: `linear-gradient(120deg, ${colors.navy}, #075f98)`,
         fontFamily,
         alignItems: 'center',
         justifyContent: 'center',
@@ -23,56 +23,42 @@ export function Outro() {
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
         <div style={{ opacity: logoP, transform: `scale(${logoP})` }}>
-          <div
-            style={{
-              width: 84,
-              height: 84,
-              borderRadius: 22,
-              background: 'rgba(255,255,255,0.16)',
-              border: '1px solid rgba(255,255,255,0.35)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fff',
-              fontWeight: 800,
-              fontSize: 40,
-              backdropFilter: 'blur(6px)',
-            }}
-          >
-            F
-          </div>
+          <img src={logo} alt="FYSIKO" style={{ height: 60, filter: 'brightness(0) invert(1)' }} />
         </div>
         <div
           style={{
-            fontSize: 50,
-            fontWeight: 800,
+            fontFamily: headlineFamily,
+            fontWeight: 900,
+            textTransform: 'uppercase',
+            fontSize: 40,
+            lineHeight: 0.95,
             color: '#fff',
-            letterSpacing: -1,
+            textAlign: 'center',
             opacity: titleP,
             transform: `translateY(${interpolate(titleP, [0, 1], [18, 0])}px)`,
           }}
         >
-          FYSIKO
+          No esperes a que el dolor te detenga.
         </div>
         <div
           style={{
-            fontSize: 19,
+            fontSize: 17,
             fontWeight: 600,
             color: 'rgba(255,255,255,0.92)',
             opacity: ctaP,
             transform: `translateY(${interpolate(ctaP, [0, 1], [14, 0])}px)`,
           }}
         >
-          Disponible en escritorio, tablet y móvil
+          Web responsive · Escritorio, tablet y móvil
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 6, opacity: chipsP, transform: `translateY(${interpolate(chipsP, [0, 1], [12, 0])}px)` }}>
-          {['Agenda', 'Pacientes', 'Reportes', 'Notificaciones'].map((c) => (
+          {['fysiko.mx', 'Orizaba, Veracruz', '272 356 5429'].map((c) => (
             <div
               key={c}
               style={{
-                padding: '8px 16px',
+                padding: '9px 18px',
                 borderRadius: 20,
-                background: 'rgba(255,255,255,0.16)',
+                background: 'rgba(255,255,255,0.14)',
                 border: '1px solid rgba(255,255,255,0.3)',
                 color: '#fff',
                 fontSize: 13,
